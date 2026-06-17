@@ -1,0 +1,10 @@
+{
+  "name": "model-usage",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Audit Claude Code token usage by model from local transcripts and optionally apply token-saving config.",
+  "dependencies": {
+    "zod": "^3.23.8"
+  }
+}
