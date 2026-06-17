@@ -135,9 +135,10 @@ in {
       };
     };
 
-    # Remove working-copy files before linkGeneration to avoid collision errors.
+    # Remove working-copy files before checkLinkTargets so home-manager can
+    # place nix store symlinks without conflict errors.
     home.activation.claudeTokenToolsCleanup =
-      lib.hm.dag.entryBefore [ "linkGeneration" ] ''
+      lib.hm.dag.entryBefore [ "checkLinkTargets" ] ''
         for f in \
           "${config.home.homeDirectory}/.claude/hooks/cap-verbose-bash.sh" \
           "${config.home.homeDirectory}/.claude/hooks/stamp-account.sh" \
