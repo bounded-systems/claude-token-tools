@@ -1,0 +1,19 @@
+modules/home-manager.nix
+  s_4a7064b72124e5::t_55739c7023d330 164
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.3",
+  "base_commit_sha": "c70567e316f31bc1d5f485aeb2e717da7586cd0d",
+  "prompts": {},
+  "sessions": {
+    "s_4a7064b72124e5": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "63210b16-e8c4-4c8f-bde4-79f1c09dcfa4",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Robert DeLanghe <1240090+bdelanghe@users.noreply.github.com>"
+    }
+  }
+}
