@@ -161,7 +161,7 @@ in {
         _settingsFile="${config.home.homeDirectory}/.claude/settings.json"
         $DRY_RUN_CMD mkdir -p "${config.home.homeDirectory}/.claude"
         if [ ! -f "$_settingsFile" ]; then
-          $DRY_RUN_CMD ${pkgs.coreutils}/bin/printf '{}\\n' > "$_settingsFile"
+          $DRY_RUN_CMD ${pkgs.coreutils}/bin/printf '%s\n' '{}' > "$_settingsFile"
         fi
         $DRY_RUN_CMD ${mergeScript} "$_settingsFile"
       '';
