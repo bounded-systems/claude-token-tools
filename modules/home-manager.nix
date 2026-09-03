@@ -120,6 +120,12 @@ in {
           source = ../hooks/cap-verbose-bash.sh;
           executable = true;
         };
+        # cap-verbose-bash.sh rewrites a matching command into
+        # `bash <hooks dir>/cap-run.sh ...`, so the runner ships beside it.
+        "${cfg.configDir}/hooks/cap-run.sh" = {
+          source = ../hooks/cap-run.sh;
+          executable = true;
+        };
       })
       (lib.mkIf cfg.stampAccount.enable {
         "${cfg.configDir}/hooks/stamp-account.sh" = {
@@ -160,6 +166,7 @@ in {
       lib.hm.dag.entryBefore [ "checkLinkTargets" ] ''
         for f in \
           "${claudeDir}/hooks/cap-verbose-bash.sh" \
+          "${claudeDir}/hooks/cap-run.sh" \
           "${claudeDir}/hooks/stamp-account.sh" \
           "${claudeDir}/scripts/model-usage-audit.sh" \
           "${claudeDir}/skills/model-usage/audit.ts" \
