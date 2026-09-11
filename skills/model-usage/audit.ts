@@ -6,7 +6,7 @@
  * Hierarchy: account → repo → project (cwd) → session (.jsonl) → turn.
  * Attribution keys off the recorded `cwd`/`gitBranch`/`sessionId` inside each
  * session — lossless, unlike the sanitized projects/<dir> name. Account is joined
- * from ~/.claude/session-accounts.jsonl (written by the stamp-account SessionStart
+ * from $XDG_STATE_HOME/claude/session-accounts.jsonl (written by the stamp-account SessionStart
  * hook; sessions before that hook show as "(pre-hook)"). Reads only model names,
  * token counts, cwd, branch, sessionId; never emits conversation content.
  *
@@ -43,7 +43,18 @@ const HOME = homedir();
 const CONFIG_DIR = process.env.CLAUDE_CONFIG_DIR || join(HOME, ".config", "claude");
 const PROJECTS = join(CONFIG_DIR, "projects");
 const SETTINGS = join(HOME, ".claude", "settings.json");
-const ACCOUNTS_LOG = join(HOME, ".claude", "session-accounts.jsonl");
+// The stamp-account hook writes to XDG state. The legacy path is still read as
+// a fallback so history written before that fix is not orphaned; whichever
+// exists is used, new location first.
+const ACCOUNTS_LOG_XDG = join(
+  process.env.XDG_STATE_HOME || join(HOME, ".local", "state"),
+  "claude",
+  "session-accounts.jsonl",
+);
+const ACCOUNTS_LOG_LEGACY = join(HOME, ".claude", "session-accounts.jsonl");
+const ACCOUNTS_LOG = existsSync(ACCOUNTS_LOG_XDG)
+  ? ACCOUNTS_LOG_XDG
+  : ACCOUNTS_LOG_LEGACY;
 
 // ---------- zod contracts ----------
 const Usage = z.object({

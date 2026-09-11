@@ -4007,7 +4007,9 @@ var HOME = homedir();
 var CONFIG_DIR = process.env.CLAUDE_CONFIG_DIR || join(HOME, ".config", "claude");
 var PROJECTS = join(CONFIG_DIR, "projects");
 var SETTINGS = join(HOME, ".claude", "settings.json");
-var ACCOUNTS_LOG = join(HOME, ".claude", "session-accounts.jsonl");
+var ACCOUNTS_LOG_XDG = join(process.env.XDG_STATE_HOME || join(HOME, ".local", "state"), "claude", "session-accounts.jsonl");
+var ACCOUNTS_LOG_LEGACY = join(HOME, ".claude", "session-accounts.jsonl");
+var ACCOUNTS_LOG = existsSync(ACCOUNTS_LOG_XDG) ? ACCOUNTS_LOG_XDG : ACCOUNTS_LOG_LEGACY;
 var Usage = exports_external.object({
   input_tokens: exports_external.number().optional(),
   output_tokens: exports_external.number().optional(),
